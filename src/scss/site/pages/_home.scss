@@ -1,0 +1,375 @@
+@use '../../base/variables' as fibVars;
+@use '../../base/funcs' as fibFuncs;
+@use '../../base/mixins' as fibMixins;
+@use '../variables' as fibSiteVars;
+
+#cmp__blog-home {
+  margin-top: fibFuncs.size(10);
+
+  .cmp__home-heading {
+    @include fibMixins.flex_init($column: true, $center: true);
+
+    .cmp__home-heading-container {
+      @include fibMixins.flex_init($center: true);
+      padding: fibVars.$md-size fibVars.$lg-size;
+
+      color: fibVars.$white;
+      background: url('#{fibVars.$assets-path}/background.png'), radial-gradient(fibVars.$brand-color, darken(fibVars.$brand-color, 5%));
+      box-shadow: inset 0 0 10px 0 #000000;
+      // Credit: https://codepen.io/carterpape/pen/rNjJKbM.
+      clip-path: polygon(
+                      1% 2%,
+                      3.5% 0.1%,
+                      8.9% 2.7%,
+                      16.2% 1.2%,
+                      19.7% 0.8%,
+                      24.7% 2%,
+                      31.2% 0%,
+                      35.9% 2.3%,
+                      40.6% 0.5%,
+                      47.1% 1.8%,
+                      49.9% 1%,
+                      53.8% 2.5%,
+                      62.2% 0.4%,
+                      67.3% 1.2%,
+                      70.3% 0.3%,
+                      75.8% 1.4%,
+                      78.5% 1.7%,
+                      84% 2.6%,
+                      91.1% 0.5%,
+                      93.6% 2.4%,
+                      97.3% 0.3%,
+                      98.9% 6%,
+                      98.1% 11.4%,
+                      98.6% 15.5%,
+                      97.3% 17.8%,
+                      97.7% 27.4%,
+                      98.3% 28.5%,
+                      99.7% 34.1%,
+                      98.8% 41.9%,
+                      98.3% 45.7%,
+                      98.4% 50.9%,
+                      98.7% 57.4%,
+                      99.6% 60.4%,
+                      99.4% 66.6%,
+                      99.2% 69.5%,
+                      97.4% 77.1%,
+                      98.1% 82.3%,
+                      99.9% 83.5%,
+                      98.2% 91.5%,
+                      99.3% 95.3%,
+                      98% 98.6%,
+                      93.6% 97.4%,
+                      90.3% 98.3%,
+                      86.8% 98.3%,
+                      78.6% 98.5%,
+                      76.4% 99.2%,
+                      69.7% 99.8%,
+                      64.2% 99.3%,
+                      61.8% 99.2%,
+                      57.2% 98.1%,
+                      48.7% 98.3%,
+                      46.8% 99%,
+                      39.6% 98.9%,
+                      33.8% 97.3%,
+                      28.2% 99.4%,
+                      27% 98.3%,
+                      22.1% 98.6%,
+                      13.1% 97.1%,
+                      8.7% 99.3%,
+                      2.7% 97.4%,
+                      2% 98.2%,
+                      2.1% 94.3%,
+                      0.7% 90.5%,
+                      0.9% 86.3%,
+                      2.2% 78.2%,
+                      0.4% 76.7%,
+                      1.2% 72.1%,
+                      2% 64%,
+                      1.4% 59.8%,
+                      0.4% 57.3%,
+                      0.3% 49.1%,
+                      2.9% 44.7%,
+                      1.9% 41.3%,
+                      0.8% 35.7%,
+                      2.9% 31.3%,
+                      0.8% 24.9%,
+                      2.7% 20.5%,
+                      0.8% 17.4%,
+                      2.5% 8.6%,
+                      1.1% 5.5%
+      );
+
+      .cmp__home-logo {
+        margin-right: fibFuncs.size(-14);
+      }
+
+      .cmp__home-site-name {
+        @include fibMixins.flex_init($inline: true, $center: true, $column: true);
+
+        span:first-child {
+          font: {
+            family: fibVars.$logo-font-family;
+            size: fibFuncs.size(8);
+          }
+          text-transform: uppercase;
+          letter-spacing: fibVars.$large-letter-spacing;
+          line-height: fibVars.$xs-line-height;
+        }
+
+        span:last-child {
+          font-size: fibVars.$xs-size;
+          margin: fibFuncs.size(-14) 0;
+        }
+      }
+    }
+
+    .cmp__tear-paper {
+      display: none;
+      position: absolute;
+      z-index: 1;
+    }
+  }
+
+  .cmp__responsive-flex {
+    position: relative;
+    z-index: 0;
+    margin-top: fibVars.$xl-size;
+
+    h4 {
+      margin-top: 0;
+    }
+
+    > div {
+      position: relative;
+      z-index: -1;
+      @include fibMixins.barrier_widget(fibSiteVars.$light-widget-bg);
+      margin-top: fibVars.$xl-size;
+
+      :last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    > div:first-of-type {
+      padding: {
+        left: fibVars.$xl-size;
+        right: fibVars.$xl-size;
+      };
+    }
+
+    > div:last-of-type {
+      padding: {
+        left: fibVars.$xl-size;
+        right: fibVars.$xl-size;
+      };
+    }
+
+    a {
+      border-bottom: none;
+    }
+
+    blockquote, dl {
+      padding: 0;
+      margin: 0;
+      margin-bottom: fibVars.$lg-size;
+      background-color: transparent;
+      color: inherit;
+      @include fibMixins.no_shadow_radius;
+    }
+
+    figure {
+      pre {
+        @include fibMixins.noisy_bg(fibVars.$white);
+      }
+    }
+
+    .cmp__barrier-dark {
+      @include fibMixins.barrier_widget(fibSiteVars.$dark-widget-bg);
+      color: fibVars.$white;
+
+      h4 {
+        color: inherit;
+      }
+
+      figure {
+        figcaption {
+          color: fibVars.$light-gray;
+        }
+      }
+    }
+
+    .cmp__stitch {
+      display: none;
+      position: absolute;
+      left: calc(50% - 10px);
+      height: 3px;
+      width: 20px;
+      border-color: transparent transparent fibVars.$white transparent;
+      border-radius: 0 0 20px 50%/5px;
+      background-color: fibVars.$white;
+      box-shadow: fibVars.$box-shadow;
+
+      &:first-of-type {
+        top: 10%;
+      }
+
+      &:last-of-type {
+        bottom: 10%;
+      }
+
+      &::before, &::after {
+        content: '';
+        position: absolute;
+        top: -1.5px;
+        width: 6px;
+        height: 6px;
+        background-color: fibVars.$medium-gray;
+        border-radius: 50%;
+        z-index: -1;
+      }
+
+      &::before {
+        left: -3px;
+      }
+
+      &::after {
+        right: -3px;
+      }
+    }
+  }
+
+  // TODO: Need to investigate why x-scrollbar not appears like in other pages.
+  .cmp__tip {
+    pre {
+      code {
+        white-space: pre-wrap;
+      }
+    }
+  }
+
+  .cmp__cartoon {
+    @include fibMixins.film_strip(rgba(230, 230, 230));
+    margin-top: calc(#{fibVars.$xl-size} + 20px);
+
+    .cmp__cartoon-title {
+      text-align: center;
+      margin-bottom: fibVars.$xl-size;
+      position: relative;
+
+      h4 {
+        @include fibMixins.create_double_side_arrowed_ribbon(fibVars.$xxl-size, fibVars.$white);
+        display: inline-flex;
+        margin: 0;
+        padding: {
+          left: fibVars.$md-size;
+          right: fibVars.$md-size;
+        };
+
+        .cmp__nail {
+          position: absolute;
+          width: 5px;
+          height: 5px;
+          background-color: fibVars.$gray;
+          border-radius: 50%;
+          box-shadow: fibVars.$box-shadow;
+          z-index: 1;
+          left: -5px;
+        }
+
+        .cmp__nail:nth-child(2) {
+          left: auto;
+          right: -5px;
+        }
+      }
+    }
+
+    p {
+      margin-left: fibVars.$lg-size;
+      margin-right: fibVars.$lg-size;
+      color: fibVars.$gray;
+    }
+  }
+}
+
+@media only screen and (min-width: fibVars.$tablet) {
+  #cmp__blog-home {
+    .cmp__home-heading {
+      .cmp__home-heading-container {
+        padding: fibVars.$lg-size fibVars.$xl-size;
+      }
+    }
+
+    .cmp__posts-carousel {
+      .cmp__carousel-page {
+        padding: {
+          left: fibVars.$xl-size;
+          right: fibVars.$xl-size;
+        };
+      }
+    }
+
+    .cmp__responsive-flex {
+      > div {
+        flex-grow: 1;
+        width: 50%;
+        max-width: 50%;
+        margin-top: 0;
+      }
+
+      .cmp__stitch {
+        display: block;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: fibVars.$breakpoint1) {
+  #cmp__blog-home {
+    .cmp__cartoon {
+      p {
+        max-width: fibVars.$container-width;
+        @include fibMixins.horizontal-center;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: fibVars.$desktop) {
+  #cmp__blog-home {
+    .cmp__posts-carousel {
+      .cmp__carousel-page {
+        padding: {
+          left: fibFuncs.size(16);
+          right: fibFuncs.size(16);
+        };
+      }
+    }
+
+    .cmp__responsive-flex {
+      > div:first-of-type {
+        padding: {
+          left: fibFuncs.size(16);
+          right: fibVars.$xl-size;
+        };
+      }
+
+      > div:last-of-type {
+        padding: {
+          left: fibVars.$xl-size;
+          right: fibFuncs.size(16);
+        };
+      }
+    }
+
+    .cmp__cartoon {
+      figure {
+        padding: 0 fibFuncs.size(18);
+      }
+    }
+
+    .cmp__newsletter-subscribe {
+      width: 75%;
+    }
+  }
+}
