@@ -1,0 +1,218 @@
+@use '../base/variables' as fibVars;
+@use '../base/mixins' as fibMixins;
+@use '../base/funcs' as fibFuncs;
+@use 'variables' as fibSiteVars;
+
+%meta-font {
+  font: {
+    size: fibSiteVars.$article-meta-font-size;
+    family: fibSiteVars.$article-meta-font-family;
+  }
+}
+
+%icon-text {
+  @include fibMixins.flex_init($ver: true);
+
+  cmp-icon {
+    margin-right: fibFuncs.size(-14);
+  }
+}
+
+// Author.
+%cmp__author {
+  @extend %meta-font;
+  @include fibMixins.flex_init($inline: true, $ver: true);
+
+  color: fibSiteVars.$article-meta-color;
+
+  a {
+    @include fibMixins.flex_init($column: true, $center: true);
+    border-bottom: none;
+
+    // Author Photo.
+    img {
+      border-radius: 50%;
+      opacity: fibSiteVars.$article-author-pic-opacity;
+      width: fibSiteVars.$author-pic-large-screen-width;
+    }
+
+    span {
+      margin: {
+        top: fibFuncs.size(-14);
+        left: 0;
+      };
+
+      &.cmp__article-author-role {
+        position: relative;
+        top: -3px;
+        padding: 1px 5px;
+
+        font-size: fibSiteVars.$article-author-role-font-size;
+        text-transform: uppercase;
+        letter-spacing: fibVars.$medium-letter-spacing;
+
+        color: fibVars.$white;
+        background-color: fibSiteVars.$article-author-admin-badge-color;
+        border-radius: fibVars.$border-radius;
+
+        &.cmp__article-author-guest {
+          background-color: fibSiteVars.$article-author-guest-badge-color;
+        }
+      }
+    }
+  }
+}
+
+%cmp__author-mini {
+  @extend %meta-font;
+
+  a {
+    @include fibMixins.flex_init($ver: true);
+    border-bottom: none;
+
+    img {
+      border-radius: 50%;
+      margin-right: fibFuncs.size(-14);
+      width: fibSiteVars.$author-pic-default-width;
+    }
+  }
+}
+
+%cmp__date {
+  @extend %meta-font;
+  @extend %icon-text;
+
+  span {
+    font-variant: small-caps;
+  }
+}
+
+%cmp__comments {
+  a {
+    @extend %icon-text;
+    border-bottom: none;
+  }
+}
+
+%cmp__tags {
+  @extend %meta-font;
+  @extend %icon-text;
+  font-style: italic;
+
+  a {
+    border-bottom: none;
+  }
+
+  ul, li {
+    @include fibMixins.no_spacing;
+    list-style: none;
+  }
+
+  ul {
+    @include fibMixins.flex_init($inline: true, $wrap: true);
+
+    li {
+      margin-right: fibFuncs.size(-14);
+
+      &:before {
+        display: none;
+      }
+
+      a {
+        display: inline;
+      }
+    }
+  }
+}
+
+.cmp__author {
+  @extend %cmp__author;
+}
+
+.cmp__author-mini {
+  @extend %cmp__author-mini;
+}
+
+.cmp__date {
+  @extend %cmp__date;
+}
+
+.cmp__total-comments {
+  @extend %meta-font;
+  @extend %cmp__comments;
+}
+
+.cmp__tags {
+  @extend %cmp__tags;
+}
+
+// In small screens, make the content fluid and fixed in large.
+.cmp__auto-layout {
+  > * {
+    @include fibMixins.set_hor_margin(fibVars.$lg-size);
+  }
+
+  .cmp__sub {
+    .cmp__responsive {
+      @include fibMixins.set_hor_margin(0);
+    }
+
+    figure {
+      figcaption, caption {
+        @include fibMixins.set_hor_margin(0);
+      }
+    }
+  }
+}
+
+// Makes the applied element fixed in large screens and full-width in small screens.
+.cmp__responsive {
+  max-width: 100%;
+  @include fibMixins.set_hor_margin(0);
+
+  &.cmp__toc,
+  &.cmp__widget,
+  &.cmp__sub {
+    @include fibMixins.no_shadow_radius;
+  }
+
+  figcaption, caption {
+    @include fibMixins.set_hor_margin(fibVars.$lg-size);
+  }
+
+  img, .cmp__table-wrapper, pre, .cmp__widget, .cmp__card {
+    @include fibMixins.no_shadow_radius;
+  }
+}
+
+// Page custom heading.
+.cmp__section-heading {
+  $border-color: darken(fibVars.$dim-gray, 10%);
+
+  position: relative;
+  @include fibMixins.flex_init($center: true);
+  margin: {
+    top: fibVars.$xxl-size;
+    bottom: fibVars.$xl-size;
+  };
+
+  color: fibVars.$gray;
+
+  span {
+    @include fibMixins.create_double_side_arrowed_ribbon(fibVars.$widget-ribbon-height, fibVars.$widget-ribbon-bg);
+    padding: 0 fibVars.$sm-size;
+    @include fibMixins.set_uppercase($family: fibVars.$heading-font-family);
+    font-weight: bold;
+    color: fibVars.$widget-ribbon-color;
+    z-index: 1;
+  }
+
+  &:after {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    content: '';
+    width: 100%;
+    border-bottom: solid 1px $border-color;
+  }
+}
