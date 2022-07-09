@@ -1,0 +1,173 @@
+@use '../base/variables' as fibVars;
+@use '../base/funcs' as fibFuncs;
+@use '../base/mixins' as fibMixins;
+@use 'variables' as fibSiteVars;
+
+// Makes the page take full viewport height.
+html, body {
+  min-height: 100vh;
+}
+
+// Site Body.
+.cmp__blog {
+  background: url('#{fibVars.$assets-path}/background-dark.png') fibVars.$brand-bg;
+
+  &.cmp__site-loading {
+    position: static;
+    overflow: hidden;
+
+    .cmp__page-loader {
+      display: block;
+    }
+  }
+
+  &.cmp__site-loaded {
+    .cmp__page-loader {
+      opacity: 0;
+    }
+
+    .cmp__site-container {
+      opacity: 1;
+    }
+  }
+}
+
+// Site Main Container.
+.cmp__site-container {
+  @include fibMixins.flex_init($column: true);
+  flex: 1 1 auto;
+  min-height: 100vh;
+  opacity: 0;
+  transition: opacity fibVars.$medium-speed ease-in;
+}
+
+// Page Main Content Container.
+.cmp__blog-main {
+  $outside-shadow-dark: darken(fibVars.$brand-bg, 15%);
+  $inner-shadow-width: 6px;
+  $inner-shadow-adjustment: 8px;
+  $grad-color-0: rgba(204, 204, 204, 0.4);
+  $grad-color-1: transparent;
+
+  --cmp-border-radius: #{fibFuncs.size(5)};
+
+  position: relative;
+  flex: 1 1 auto;
+  min-height: fibSiteVars.$app-main-min-height; // Added after introducing spiral!
+  padding: {
+    top: fibSiteVars.$page-content-top;
+    bottom: fibSiteVars.$page-content-bottom;
+  };
+
+  background: url('#{fibVars.$assets-path}/background.png'),
+  url('#{fibVars.$assets-path}/svgbg.svg') no-repeat left top,
+  url('#{fibVars.$assets-path}/coffee-stain.png') no-repeat right bottom fibVars.$white;
+
+  background-size: auto, 50%;
+
+  border-radius: var(--cmp-border-radius);
+  box-shadow: $outside-shadow-dark -20px -5px 10px,
+  $outside-shadow-dark 5px -5px 10px,
+  $outside-shadow-dark -20px 0 100px -20px,
+  rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+  rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+
+  &:before, &:after {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    width: $inner-shadow-width;
+    top: calc(var(--cmp-border-radius) - #{$inner-shadow-adjustment});
+    height: calc(100% - 2 * var(--cmp-border-radius) + #{$inner-shadow-adjustment * 2});
+  }
+
+  &:before {
+    left: 0;
+    background: linear-gradient(to right, $grad-color-0, $grad-color-1);
+  }
+
+  &:after {
+    right: 0;
+    background: linear-gradient(to left, $grad-color-0, $grad-color-1);
+  }
+}
+
+// Page title.
+.cmp__page-title {
+  margin: {
+    top: fibVars.$xl-size;
+    bottom: fibFuncs.size(17);
+  };
+
+  h1, h2, h3, h4, h5, h6 {
+    margin: {
+      top: 0;
+      bottom: 0;
+    };
+  }
+
+  h1 {
+    position: relative;
+
+    font-size: fibFuncs.size(7);
+    text-transform: uppercase;
+    letter-spacing: fibVars.$large-letter-spacing;
+    word-spacing: fibFuncs.size(-10);
+
+    background: linear-gradient(fibVars.$brand-color, fibVars.$brand-dark);
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -moz-text-fill-color: transparent;
+    text-fill-color: transparent;
+    text-shadow: 0px 0px #00000000;
+    color: lighten(fibVars.$brand-color, 3%);
+
+    &::after {
+      display: block;
+      content: '';
+      width: fibVars.$h1-border-width;
+      height: 5px;
+      margin-top: fibVars.$xl-size;
+      background-color: fibVars.$blue-gray;
+    }
+
+    &:hover::before {
+      left: calc(#{fibVars.$h1-border-width} + 10px);
+    }
+
+    &::selection {
+      -webkit-text-fill-color: fibVars.$white;
+    }
+
+    &.cmp__has-icon {
+      @include fibMixins.flex_init($ver: true, $wrap: true);
+
+      cmp-icon {
+        width: fibVars.$xl-size;
+        height: fibVars.$xl-size;
+        margin-right: fibVars.$xs-size;
+      }
+
+      span {
+        min-width: calc(100% - #{fibVars.$xl-size} - #{fibVars.$xs-size});
+      }
+    }
+  }
+
+  h4 {
+    display: inline;
+    padding-bottom: fibVars.$xs-size;
+
+    text-transform: uppercase;
+    letter-spacing: fibVars.$medium-letter-spacing;
+
+    color: fibVars.$brand-gray;
+  }
+}
+
+// Page Content.
+.cmp__blog-content {
+  margin-bottom: fibVars.$xl-size;
+}
