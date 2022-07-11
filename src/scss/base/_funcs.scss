@@ -1,0 +1,15 @@
+@use "sass:math";
+@use "sass:string";
+
+$ratio: 1.618;
+$interval: 5;
+
+@function size($point, $negative: false, $unit: 'rem') {
+  $val: math.div(math.round(math.pow($ratio, math.div($point, $interval)) * 1000), 1000);
+
+  @if $negative {
+    $val: -1 * $val;
+  }
+
+  @return string.unquote($val + $unit);
+}
