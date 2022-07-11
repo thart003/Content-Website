@@ -1,0 +1,152 @@
+@use 'variables' as fibVars;
+@use 'mixins' as fibMixins;
+@use 'funcs' as fibFuncs;
+
+.cmp__carousel {
+  --cmp-connector-size: 8px;
+
+  @include fibMixins.flex_init($hor: true, $column: true);
+  @include fibMixins.noisy_bg(fibVars.$carousel-bg);
+  position: relative;
+
+  @mixin create_trans_border($left: true) {
+    border-color: fibVars.$carousel-tab-bg-active;
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+
+    @if $left {
+      border-left-color: transparent;
+    } @else {
+      border-right-color: transparent;
+    }
+  }
+
+  .cmp__carousel-tabs {
+    @include fibMixins.flex_init();
+    @include fibMixins.create_double_side_arrowed_ribbon(fibVars.$carousel-tab-height, fibVars.$carousel-tab-bg);
+    position: absolute;
+    top: calc(-1 * #{fibVars.$carousel-tab-height} / 2);
+    z-index: 1;
+
+    &.cmp__selected-first {
+      &::before {
+        @include create_trans_border;
+      }
+    }
+
+    &.cmp__selected-last {
+      &::after {
+        @include create_trans_border(false);
+      }
+    }
+
+    a.cmp__carousel-tab {
+      @include fibMixins.flex_init($center: true);
+      position: relative;
+      height: fibVars.$carousel-tab-height;
+      padding: 0 fibVars.$sm-size;
+
+      @include fibMixins.set_uppercase();
+      line-height: fibVars.$carousel-tab-height;
+      font-weight: bold;
+
+      background-color: fibVars.$carousel-tab-bg;
+      color: fibVars.$carousel-tab-color;
+      border-bottom: none;
+      overflow: visible;
+
+      &.cmp__carousel-tab-selected {
+        background-color: fibVars.$carousel-tab-bg-active;
+        color: fibVars.$carousel-tab-active-color;
+      }
+
+      &:hover, &:active, &:focus {
+        text-shadow: none;
+      }
+
+      &:focus-visible {
+        outline-offset: -5px;
+      }
+    }
+  }
+
+  .cmp__carousel-pages-container {
+    position: relative;
+    overflow: hidden;
+    max-width: 100%;
+
+    .cmp__carousel-pages {
+      position: relative;
+      @include fibMixins.flex_init();
+      padding: {
+        top: fibFuncs.size(14);
+        bottom: fibFuncs.size(14);
+      }
+
+      transition: transform fibVars.$medium-speed;
+
+      .cmp__carousel-page {
+        min-width: 100%;
+      }
+    }
+  }
+
+  .cmp__carousel-nav {
+    a {
+      position: absolute;
+      @include fibMixins.flex_init($center: true);
+      top: calc(50% - #{fibVars.$carousel-nav-icon-size} / 2);
+      width: fibVars.$carousel-nav-icon-size;
+      height: fibVars.$carousel-nav-icon-size;
+      background-color: fibVars.$carousel-nav-arrow-color;
+      border-radius: 50%;
+      box-shadow: fibVars.$box-shadow;
+      border-bottom: none;
+      transition: background-color fibVars.$medium-speed;
+
+      cmp-icon {
+        color: fibVars.$white;
+        transition: color fibVars.$medium-speed;
+      }
+
+      &:hover {
+        background-color: fibVars.$carousel-nav-arrow-hover-color;
+      }
+    }
+
+    :first-child {
+      left: fibFuncs.size(-8);
+    }
+
+    :last-child {
+      right: fibFuncs.size(-8);
+    }
+  }
+
+  .cmp__carousel-nav-dots {
+    position: absolute;
+    bottom: calc(-1 * #{fibVars.$carousel-nav-dots-height} / 2);
+    @include fibMixins.flex_init($center: true);
+    padding: 0 fibFuncs.size(-8);
+    height: fibVars.$carousel-nav-dots-height;
+    background-color: fibVars.$carousel-nav-dots-bg;
+    border-radius: 10px;
+
+    span {
+      width: fibVars.$carousel-nav-dots-size;
+      height: fibVars.$carousel-nav-dots-size;
+      background-color: fibVars.$carousel-nav-dot-bg;
+      border-radius: 50%;
+      cursor: pointer;
+
+      &.cmp__dot-selected {
+        background-color: fibVars.$carousel-nav-dot-active;
+        cursor: default;
+      }
+
+      &:not(:last-child) {
+        margin-right: fibFuncs.size(-12);
+      }
+    }
+  }
+}
